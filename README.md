@@ -587,7 +587,7 @@ the same connector may cause these limits to be exceeded.
       "object": {
         "object_api_name": "restaurant",
         "label": "Restaurants"
-      }
+      },
       "operation": "upsert",
       "schema": {
         "name": {
@@ -681,7 +681,7 @@ to retry as the best way to avoid data integrity issues.
       "object": {
         "object_api_name": "restaurant",
         "label": "Restaurants"
-      }
+      },
       "operation": "upsert",
       "schema": {
         "name": {
@@ -728,29 +728,29 @@ to retry as the best way to avoid data integrity issues.
     "records": [
       {
         "name": "Ashley's",
-				"zip": "48104",
-				"tag_list": ["Bar", "Brewpub"]
-			},
+        "zip": "48104",
+        "tag_list": ["Bar", "Brewpub"]
+      },
       {
-				"name": "Seva",
-				"zip": "48103",
-				"tag_list": ["Vegan", "Casual"]
-			},
+        "name": "Seva",
+        "zip": "48103",
+        "tag_list": ["Vegan", "Casual"]
+      },
       {
-				"name": "Pizza House",
-				"zip": "48104",
-				"tag_list": ["Pizzeria", "Sports Bar"]
-			},
+        "name": "Pizza House",
+        "zip": "48104",
+        "tag_list": ["Pizzeria", "Sports Bar"]
+      },
       {
-				"name": "Zingerman's Delicatessen",
-				"zip": "48104",
-				"tag_list": ["Deli", "Specialty"]
-			},
+        "name": "Zingerman's Delicatessen",
+        "zip": "48104",
+        "tag_list": ["Deli", "Specialty"]
+      },
       {
-				"name": "Gandy Dancer",
-				"zip": "48104",
-				"tag_list": ["American", "Seafood", "Historic", "Cocktails"]
-			}
+        "name": "Gandy Dancer",
+        "zip": "48104",
+        "tag_list": ["American", "Seafood", "Historic", "Cocktails"]
+      }
     ]
   }
 }
@@ -765,27 +765,27 @@ to retry as the best way to avoid data integrity issues.
   "result": {
     "record_results": [
       {
-				"identifier": "Ashley's",
-				"success": true
-			},
+        "identifier": "Ashley's",
+        "success": true
+      },
       {
-				"identifier": "Seva",
-				"success": true
-			},
+        "identifier": "Seva",
+        "success": true
+      },
       {
-				"identifier": "Pizza House",
-				"success": false,
-				"error_message": "API Error, please retry"
-			},
+        "identifier": "Pizza House",
+        "success": false,
+        "error_message": "API Error, please retry"
+      },
       {
-				"identifier": "Zingerman's Delicatessen",
-				"success": true
-			},
+        "identifier": "Zingerman's Delicatessen",
+        "success": true
+      },
       {
-				"identifier": "Gandy Dancer",
-				"success": false,
-				"error_message": "Exceeded tag limit of 3"
-			}
+        "identifier": "Gandy Dancer",
+        "success": false,
+        "error_message": "Exceeded tag limit of 3"
+      }
     ]
   }
 }
