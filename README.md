@@ -164,8 +164,9 @@ between a client (Census) and a server (your Custom API). While there are
 several libraries that can help you implement JSON-RPC, you may find it simpler
 to "roll your own".
 
-Census follows the JSON-RPC 2.0 specification (link) with a few additional
-restrictions to make things even simpler:
+Census follows the [JSON-RPC 2.0
+specification](https://www.jsonrpc.org/specification) with a few additional
+restrictions to simplify things even more:
 * `params` (in the request) and `result` (in the response) will always be JSON
   objects, not arrays.
 * `params` will never be omitted - if a method has no params, an empty object
