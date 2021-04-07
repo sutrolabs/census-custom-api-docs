@@ -57,7 +57,7 @@ Your Custom API is a bridge between Census and your destination SaaS or other
 system. Census syncs are dividied into two phases, each of which will call
 different methods on your API: planning and execution.
 
-![Planning Diagram](assets/plan.png]
+![Planning Diagram](assets/plan.png)
 
 In the planning phase, Census will ask your API what kinds of data it manages
 and what operations are available on that data. This phase is broken into three
@@ -68,7 +68,7 @@ API methods:
 * `supported_operations` - Find out what kinds of "writes" can be performed on
   an object - can new instances be created? Can existing instances be modified?
 
-![Execution Diagram](assets/execute.png]
+![Execution Diagram](assets/execute.png)
 
 Once the sync has been planned by the user (utilizing metadata from your API and
 your data warehouse) it can be executed. At execution time, Census will call two
