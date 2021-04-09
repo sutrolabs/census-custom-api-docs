@@ -69,27 +69,49 @@ server.sync_batch = ({ sync_plan, records }) => {
   };
 };
 
-const port = 6161;
+// Run as a AWS Lambda-style handler function
 
-require("http")
-  .createServer((req, res) => {
-    var requestBodyBuffer = "";
-    req.on("data", (chunk) => (requestBodyBuffer += chunk));
-    req.on("end", () => {
-      //console.log({requestBody})
-      const { id, method, params } = JSON.parse(requestBodyBuffer);
+exports.handler = async function(event, context) {
+  const requestBodyBuffer = event.body;
+  const { id, method, params } = JSON.parse(requestBodyBuffer);
 
-      const result = server[method](params);
+  const result = server[method](params);
 
-      const body = {
-        jsonrpc: "2.0",
-        id,
-        result,
-      };
+  const response = {
+    jsonrpc: "2.0",
+    id,
+    result,
+  };
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.write(JSON.stringify(body));
-      res.end();
-    });
-  })
-  .listen(port);
+  return {
+    statusCode: 200,
+    body: JSON.stringify(response)
+  };
+}
+
+// Run as a regular node process
+
+// const port = 6161;
+
+// require("http")
+//   .createServer((req, res) => {
+//     var requestBodyBuffer = "";
+//     req.on("data", (chunk) => (requestBodyBuffer += chunk));
+//     req.on("end", () => {
+//       //console.log({requestBody})
+//       const { id, method, params } = JSON.parse(requestBodyBuffer);
+
+//       const result = server[method](params);
+
+//       const body = {
+//         jsonrpc: "2.0",
+//         id,
+//         result,
+//       };
+
+//       res.writeHead(200, { "Content-Type": "application/json" });
+//       res.write(JSON.stringify(body));
+//       res.end();
+//     });
+//   })
+//   .listen(port);
