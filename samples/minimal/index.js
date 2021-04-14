@@ -46,12 +46,12 @@ server.list_fields = ({ object }) => {
   };
 };
 
-server.get_sync_speed = ({ sync_plan }) => {
-  console.log("get sync speed for sync", sync_plan);
+server.get_sync_speed = () => {
+  console.log("get sync speed");
   return {
-    maximum_batch_size: 2,
-    maximum_records_per_second: 1,
-    maximum_parallel_batches: 1,
+    maximum_batch_size: 200,
+    maximum_records_per_second: 100,
+    maximum_parallel_batches: 4,
   };
 };
 
