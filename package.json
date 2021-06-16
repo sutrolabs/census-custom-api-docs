@@ -1,0 +1,33 @@
+{
+  "name": "census-custom-api-docs",
+  "version": "0.0.1",
+  "description": "Sample code for working with the Census Custom Destination API",
+  "main": "index.js",
+  "dependencies": {
+    "@netlify/functions": "^0.7.2",
+    "@types/node": "^15.12.2",
+    "postgresql-client": "^1.16.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sutrolabs/census-custom-api-docs.git"
+  },
+  "keywords": [
+    "census",
+    "getcensus",
+    "etl",
+    "reverse-etl",
+    "postgres",
+    "postgresql"
+  ],
+  "author": "Bradley Buda",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/sutrolabs/census-custom-api-docs/issues"
+  },
+  "homepage": "https://github.com/sutrolabs/census-custom-api-docs#readme"
+}
