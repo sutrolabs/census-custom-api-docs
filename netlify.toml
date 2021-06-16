@@ -1,5 +1,2 @@
-[build]
-  command = "make"
-
 [functions]
-  directory = "dist"
+  directory = "samples"
