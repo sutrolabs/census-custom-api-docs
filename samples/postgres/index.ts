@@ -111,7 +111,6 @@ const server = (postgres) => {
       // Execute the prepared query once per record in a transaction
       await postgres.startTransaction();
       let statement = await postgres.prepare(query);
-      // TODO wrap in a transaction
       const insert_promises = request.records.map(r => {
         const params = all_columns.map(column => r[column]);
         console.log({ params });
