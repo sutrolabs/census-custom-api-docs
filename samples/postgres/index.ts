@@ -137,7 +137,7 @@ const handler: Handler = async (event, context) => {
   const method = request.method;
 
   const connection = new Connection();
-  await connection.connect(ssl: {enableTrace: true});
+  await connection.connect({ssl: {enableTrace: true}});
 
   try {
     const result = await server(connection)[method](request.params);
