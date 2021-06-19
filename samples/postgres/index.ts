@@ -136,8 +136,15 @@ const handler: Handler = async (event, context) => {
   const request = JSON.parse(event.body);
   const method = request.method;
 
-  const connection = new Connection();
-  await connection.connect({ssl: {enableTrace: true}});
+  const connectionOptions = {
+    ssl: {
+      // Allow self-signed certificates
+      rejectUnauthorized: false,
+    },
+  };
+
+  const connection = new Connection(connectionOptions);
+  await connection.connect();
 
   try {
     const result = await server(connection)[method](request.params);
