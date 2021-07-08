@@ -1,15 +1,52 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sample Census Functions</title>
+        <title>Sample Census Custom API Endpoints</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     </head>
     <body>
-        <h1>Sample Census Functions</h1>
-        <p>You should have 2 integration endpoints available on this server.</p>
-        <ul>
-            <li>minimal</li>
-            <li>postgres</li>
-        </ul>
+        <h1>Sample Census Custom API Endpoints</h1>
+        <p>You should have the following integration endpoints available on this server.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Endpoint URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>minimal</td>
+                    <td>An endpoint that stubs every method but doesn't push data</td>
+                    <td>{{ site.environment.URL }}/.netlify/functions/minimal</td>
+                </tr>
+                <tr>
+                    <td>postgres</td>
+                    <td>A basic integration that can write into PostgreSQL databases</td>
+                    <td>{{ site.environment.URL }}/.netlify/functions/postgres</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Installation & Testing Instructions</h2>
+        <p>These functions are currently deployed and waiting to be connected in Census</p>
+        <ol>
+            <li>Login to Census at <a href="//app.getcensus.com">app.getcensus.com</a></li>
+            <li>Click on the <strong>Connections</strong> tab</li>
+            <li>Click on <strong>Add Service</strong> and select <strong>Custom API</strong></li>
+            <li>Paste the appropriate endpoint URL of the custom API</li>
+        </ol>
+        <h2>Notes for PostgreSQL Connection</h2>
+        <p>The code for a custom connector doesn't embed any credentials for accessing your
+           destination database. There's a few ways to provide these credentials when building
+           your own connectors (see our docs). In this basic setup, you should add credentials
+           to the environment using Netlify's
+           <a href="https://app.netlify.com/sites/{{ site.environment.SITE_NAME }}/settings/deploys#environment">site settings</a>
+        </p>
+        <h2>How to Debug</h2>
+        <p>The folks at Netlify provide an easy way to access the log of how lambda functions execute. For example,
+           <a href="https://app.netlify.com/sites/{{ site.environment.SITE_NAME }}/functions/minimal">this page</a>
+           shows the log for the minimal endpoint.
+        </p>
     </body>
 </html>

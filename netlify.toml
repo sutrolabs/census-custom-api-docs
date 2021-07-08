@@ -1,2 +1,6 @@
 [functions]
   directory = "samples"
+[build]
+  base = ""
+  publish = "_site"
+  command = "npx @11ty/eleventy"
