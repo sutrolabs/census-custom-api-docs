@@ -1,5 +1,6 @@
 [functions]
   directory = "samples"
+  node_bundler = "esbuild"
 [build]
   base = ""
   publish = "_site"
