@@ -22,6 +22,11 @@
                     <td>{{ site.environment.URL }}/.netlify/functions/minimal</td>
                 </tr>
                 <tr>
+                    <td>canny</td>
+                    <td>A basic integration with canny.io that upserts users</td>
+                    <td>{{ site.environment.URL }}/.netlify/functions/canny</td>
+                </tr>
+                <tr>
                     <td>postgres</td>
                     <td>A basic integration that can write into PostgreSQL databases</td>
                     <td>{{ site.environment.URL }}/.netlify/functions/postgres</td>
@@ -29,7 +34,8 @@
             </tbody>
         </table>
         <h2>Installation & Testing Instructions</h2>
-        <p>These functions are currently deployed and waiting to be connected in Census</p>
+        <p>These functions are currently deployed and waiting to be connected in Census.</p>
+        <p><strong>Note: You need to add your Canny API Key as an environment variable (CANNY_API_KEY)</strong></p>
         <ol>
             <li>Login to Census at <a href="//app.getcensus.com">app.getcensus.com</a></li>
             <li>Click on the <strong>Connections</strong> tab</li>

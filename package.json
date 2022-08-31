@@ -4,7 +4,7 @@
   "description": "Sample code for working with the Census Custom Destination API",
   "main": "index.js",
   "dependencies": {
-    "@netlify/functions": "^0.7.2",
+    "@netlify/functions": "^1.2.0",
     "@types/node": "^15.12.2",
     "postgresql-client": "^1.16.5"
   },
