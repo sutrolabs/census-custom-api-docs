@@ -6,9 +6,9 @@
   "dependencies": {
     "@netlify/functions": "^1.2.0",
     "@types/node": "^15.12.2",
+    "axios": "^0.27.2",
     "postgresql-client": "^1.16.5"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
