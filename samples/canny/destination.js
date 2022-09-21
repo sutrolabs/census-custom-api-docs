@@ -23,6 +23,7 @@ export const Destination = (destinationObjects) => {
         },
         supported_operations: ({ object }) => {
             const operations = Object.keys(destinationObjects[object.object_api_name])
+                                     .filter(k => k.endsWith('Handler'))
                                      .map(k => k.match(/(.*)Handler/)).map(r => r[1])
             return { operations };
         },
