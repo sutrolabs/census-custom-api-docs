@@ -22,7 +22,7 @@ export const Destination = (destinationObjects) => {
             return { objects };
         },
         supported_operations: ({ object }) => {
-            const operations = Object.keys(object)
+            const operations = Object.keys(destinationObjects[object.object_api_name])
                                      .map(k => k.match(/(.*)Handler/)).map(r => r[1])
             return { operations };
         },
