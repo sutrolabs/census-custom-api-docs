@@ -49,9 +49,11 @@ const CANNY_OBJECTS = {
         [findByEmail(record.email), findByUserID(record.userID)]
       );
       const recordFound = lookupResults.some(res => res.status == 'fulfilled' && res.value.status == 200);
-
+      
       if (recordFound) {
         upsertHandler(record);
+      } else {
+        throw new Error("Record not present");
       }
     },
     fields: [

@@ -54,7 +54,7 @@ export const Destination = (destinationObjects) => {
                     return {
                         identifier: record[key_column],
                         success: false,
-                        error_message: error.response.data,
+                        error_message: error?.response?.data || error?.message,
                     };
                 }
             }));
