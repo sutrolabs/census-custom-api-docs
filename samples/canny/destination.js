@@ -22,7 +22,9 @@ export const Destination = (destinationObjects) => {
             return { objects };
         },
         supported_operations: ({ object }) => {
-            return { operations: ["upsert"] };
+            const operations = Object.keys(object)
+                                     .map(k => k.match(/(.*)Handler/)).map(r => r[1])
+            return { operations };
         },
         list_fields: ({ object }) => {
             const fields = destinationObjects[object.object_api_name].fields.map(f => 
@@ -38,10 +40,11 @@ export const Destination = (destinationObjects) => {
             };
         },
         sync_batch: async ({ sync_plan, records }) => {
+            const handlerName = `${sync_plan.operation}Handler`;
             const key_column = Object.values(sync_plan.schema).find(v => v.active_identifier).field.field_api_name;
             const record_results = await Promise.all(records.map(async (record) => {
                 try {
-                    const res = await destinationObjects[sync_plan.object.object_api_name].upsertHandler(record);
+                    const res = await destinationObjects[sync_plan.object.object_api_name][handlerName](record);
                     return {
                         identifier: record[key_column],
                         success: true,

@@ -26,6 +26,34 @@ const CANNY_OBJECTS = {
         ...uploadRecord
       });
     },
+    updateHandler: async (record) => {
+      // this not an efficient implementation!
+      // 1. check whether record is present, if it isn't, return with skip result
+      // 2. if present, call upsert/insert handler
+
+      function findByEmail(email) {
+        return axios.post('https://canny.io/api/v1/users/retrieve', {
+          apiKey: process.env.CANNY_API_KEY,
+          email
+        });
+      }
+    
+      function findByUserID(userID) {
+        return axios.post('https://canny.io/api/v1/users/retrieve', {
+          apiKey: process.env.CANNY_API_KEY,
+          userID
+        });
+      }
+
+      const lookupResults = await Promise.allSettled(
+        [findByEmail(record.email), findByUserID(record.userID)]
+      );
+      const recordFound = lookupResults.some(res => res.status == 'fulfilled' && res.value.status == 200);
+
+      if (recordFound) {
+        upsertHandler(record);
+      }
+    },
     fields: [
       {
         field_api_name: "userID",
