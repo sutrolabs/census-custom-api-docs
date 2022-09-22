@@ -8,23 +8,27 @@ const isCustomField = (fieldName, objectName) => {
   return !objectFields.includes(fieldName);
 }
 
+const upsertUserRecord = (record) => {
+  const customFields = Object.keys(record)
+    .filter(f => isCustomField(f, 'user'))
+    .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
+  const filteredRecord = Object.keys(record)
+    .filter(f => !isCustomField(f, 'user'))
+    .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
+
+  const uploadRecord = { customFields, ...filteredRecord };
+  return axios.post('https://canny.io/api/v1/users/create_or_update', {
+    apiKey: process.env.CANNY_API_KEY,
+    ...uploadRecord
+  });
+}
+
 const CANNY_OBJECTS = {
   user: {
     label: "Users",
     can_create_fields: "on_write",
     upsertHandler: (record) => {
-      const customFields = Object.keys(record)
-        .filter(f => isCustomField(f, 'user'))
-        .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
-      const filteredRecord = Object.keys(record)
-        .filter(f => !isCustomField(f, 'user'))
-        .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
-
-      const uploadRecord = { customFields, ...filteredRecord };
-      return axios.post('https://canny.io/api/v1/users/create_or_update', {
-        apiKey: process.env.CANNY_API_KEY,
-        ...uploadRecord
-      });
+      upsertUserRecord(record);
     },
     updateHandler: async (record) => {
       // this not an efficient implementation!
@@ -51,7 +55,7 @@ const CANNY_OBJECTS = {
       const recordFound = lookupResults.some(res => res.status == 'fulfilled' && res.value.status == 200);
       
       if (recordFound) {
-        upsertHandler(record);
+        upsertUserRecord(record);
       } else {
         throw new Error("Record not present");
       }
