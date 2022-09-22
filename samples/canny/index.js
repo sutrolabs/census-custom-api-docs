@@ -8,23 +8,57 @@ const isCustomField = (fieldName, objectName) => {
   return !objectFields.includes(fieldName);
 }
 
+const upsertUserRecord = (record) => {
+  const customFields = Object.keys(record)
+    .filter(f => isCustomField(f, 'user'))
+    .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
+  const filteredRecord = Object.keys(record)
+    .filter(f => !isCustomField(f, 'user'))
+    .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
+
+  const uploadRecord = { customFields, ...filteredRecord };
+  return axios.post('https://canny.io/api/v1/users/create_or_update', {
+    apiKey: process.env.CANNY_API_KEY,
+    ...uploadRecord
+  });
+}
+
 const CANNY_OBJECTS = {
   user: {
     label: "Users",
     can_create_fields: "on_write",
     upsertHandler: (record) => {
-      const customFields = Object.keys(record)
-        .filter(f => isCustomField(f, 'user'))
-        .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
-      const filteredRecord = Object.keys(record)
-        .filter(f => !isCustomField(f, 'user'))
-        .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
+      upsertUserRecord(record);
+    },
+    updateHandler: async (record) => {
+      // this not an efficient implementation!
+      // 1. check whether record is present, if it isn't, return with skip result
+      // 2. if present, call upsert/insert handler
 
-      const uploadRecord = { customFields, ...filteredRecord };
-      return axios.post('https://canny.io/api/v1/users/create_or_update', {
-        apiKey: process.env.CANNY_API_KEY,
-        ...uploadRecord
-      });
+      function findByEmail(email) {
+        return axios.post('https://canny.io/api/v1/users/retrieve', {
+          apiKey: process.env.CANNY_API_KEY,
+          email
+        });
+      }
+    
+      function findByUserID(userID) {
+        return axios.post('https://canny.io/api/v1/users/retrieve', {
+          apiKey: process.env.CANNY_API_KEY,
+          userID
+        });
+      }
+
+      const lookupResults = await Promise.allSettled(
+        [findByEmail(record.email), findByUserID(record.userID)]
+      );
+      const recordFound = lookupResults.some(res => res.status == 'fulfilled' && res.value.status == 200);
+      
+      if (recordFound) {
+        upsertUserRecord(record);
+      } else {
+        throw new Error("Record not present");
+      }
     },
     fields: [
       {
