@@ -23,7 +23,56 @@ const upsertUserRecord = (record) => {
   });
 }
 
+const updateCompanyRecord = (record) => {
+  const customFields = Object.keys(record)
+    .filter(f => isCustomField(f, 'company'))
+    .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
+  const filteredRecord = Object.keys(record)
+    .filter(f => !isCustomField(f, 'company'))
+    .reduce((obj, key) => ({ ...obj, [key]: record[key] }), {});
+
+  const uploadRecord = { customFields, ...filteredRecord };
+  return axios.post('https://canny.io/api/v1/companies/update', {
+    apiKey: process.env.CANNY_API_KEY,
+    ...uploadRecord
+  });
+}
+
 const CANNY_OBJECTS = {
+  company: {
+    label: "Companies",
+    can_create_fields: "on_write",
+    updateHandler: (record) => {
+      updateCompanyRecord(record);
+    },
+    fields: [
+      {
+        field_api_name: "id",
+        label: "Company ID",
+        identifier: true,
+        updateable: false,
+        type: "string",
+        required: true,
+        array: false,
+      },
+      {
+        field_api_name: "name",
+        label: "Name",
+        type: "string",
+        required: true,
+      },
+      {
+        field_api_name: "created",
+        label: "Created Date",
+        type: "date_time",
+      },
+      {
+        field_api_name: "monthlySpend",
+        label: "MRR (in dollars)",
+        type: "float"
+      }
+    ]
+  },
   user: {
     label: "Users",
     can_create_fields: "on_write",
