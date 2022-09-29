@@ -126,6 +126,12 @@ const CANNY_OBJECTS = {
         required: true,
       },
       {
+        field_api_name: "companies",
+        label: "Companies",
+        type: "string",
+        array: true,
+      },
+      {
         field_api_name: "avatarURL",
         label: "Avatar URL",
         type: "string",
