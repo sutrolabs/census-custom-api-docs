@@ -150,7 +150,24 @@ const CANNY_OBJECTS = {
   }
 }
 
-exports.handler = async function(event, context) {
+const isAuthenticatedRequest = (request) => {
+  return request.queryStringParameters?.census_secret === process.env.CENSUS_SECRET;
+}
+
+exports.handler = async function(event, context) { 
+  // ensure that this request is authenticated via shared secret
+  // passed in as a url parameter: your-endpoint/?census_secret=<YOUR SECRET>
+  // recommended steps to follow:
+  //  1. generate and save the secret in a password manager
+  //  2. add it to the environment as an variable called CENSUS_SECRET
+  //  3. add it to the custom URL in the Census configuration
+  if (!isAuthenticatedRequest(event)) {
+    return {
+      statusCode: 401,
+      body: "Invalid request authentication"
+    }
+  }
+
   const destination = Destination(CANNY_OBJECTS);
   const requestBodyBuffer = event.body;
   console.log(requestBodyBuffer);
