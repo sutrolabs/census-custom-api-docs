@@ -24,7 +24,7 @@
                 <tr>
                     <td>canny</td>
                     <td>A basic integration with canny.io that upserts users</td>
-                    <td>{{ site.environment.URL }}/.netlify/functions/canny</td>
+                    <td>{{ site.environment.URL }}/.netlify/functions/canny?census_secret=YOUR_SECRET</td>
                 </tr>
                 <tr>
                     <td>postgres</td>
@@ -35,12 +35,15 @@
         </table>
         <h2>Installation & Testing Instructions</h2>
         <p>These functions are currently deployed and waiting to be connected in Census.</p>
-        <p><strong>Note: You need to add your Canny API Key as an environment variable (CANNY_API_KEY)</strong></p>
+        <p><strong>Note: In order to use Canny, you need to add a shared secret
+                   for authentication (CENSUS_SECRET) as well as your Canny
+                   API Key (CANNY_API_KEY) as environment variables</strong></p>
         <ol>
             <li>Login to Census at <a href="//app.getcensus.com">app.getcensus.com</a></li>
             <li>Click on the <strong>Connections</strong> tab</li>
             <li>Click on <strong>Add Service</strong> and select <strong>Custom API</strong></li>
             <li>Paste the appropriate endpoint URL of the custom API</li>
+            <li>Replace YOUR_SECRET with a secret you generate and save</li>
         </ol>
         <h2>Notes for PostgreSQL Connection</h2>
         <p>The code for a custom connector doesn't embed any credentials for accessing your
